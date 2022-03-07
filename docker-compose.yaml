@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+
+  jupyter:
+    container_name: "matous_jupyter"
+    image: jupyter/datascience-notebook:python-3.8.6
+    restart: "always"
+    ports:
+      - 8888:8888
+    env_file:
+      - config/jupyter.env
+    volumes:
+      - ./:/home/jovyan/work
+
+  mongodb:
+    container_name: "matous_mongo"
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+    - 27017:27017
+    volumes:
+    - shared/:/data/db
+    restart: "always"
+
+volumes:
+  shared:
